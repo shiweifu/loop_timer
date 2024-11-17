@@ -1,21 +1,20 @@
 import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import TimerItem from "../../components/timer_item";
 import { useLayoutEffect } from "react";
-import { useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 
 export default function HomeScreen() {
   let navigation = useNavigation();
   let rightButtons = [
     {
       text: "🔍",
-      onPress: () => {
-        console.log("search");
-      },
+      onPress: () => {},
     },
     {
       text: "添加",
       onPress: () => {
-        console.log("add");
+        // 跳转到添加 timer 页面
+        router.push("/add_timer");
       },
     },
   ];
@@ -27,7 +26,7 @@ export default function HomeScreen() {
         <View className="flex-row items-center pr-2">
           {rightButtons.map((item, index) => (
             <View key={index}>
-              <Pressable onClick={item.onPress}>
+              <Pressable onPress={item.onPress}>
                 <Text className="text-[16px] px-4">{item.text}</Text>
               </Pressable>
             </View>

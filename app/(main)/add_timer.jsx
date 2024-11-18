@@ -8,23 +8,24 @@ function AddTimerPage() {
   let [title, setTitle] = useState("");
   let [type, setType] = useState(1001);
 
-  const _handleSave = () => {
-    // 保存
-    console.log(title);
-    console.log("handle_save");
-  };
+  const rightView = (
+    <View className="flex-row items-center pr-2">
+      <Button
+        onPress={() => {
+          console.log("保存");
+          console.log(title);
+        }}
+        title="保存"
+      ></Button>
+    </View>
+  );
 
   useLayoutEffect(() => {
-    // 设置导航条标题
     navigation.setOptions({
       title: "添加计时器",
-      headerRight: () => (
-        <View className="flex-row items-center pr-2">
-          <Button onPress={_handleSave} title="保存"></Button>
-        </View>
-      ),
+      headerRight: () => rightView,
     });
-  }, []);
+  }, [navigation]);
 
   return (
     <View>
@@ -36,6 +37,7 @@ function AddTimerPage() {
               value={title}
               onChangeText={(text) => {
                 console.log(text);
+                setTitle(text);
               }}
             ></TextInput>
           </View>
@@ -45,8 +47,26 @@ function AddTimerPage() {
           <Text>计时器类型</Text>
           <View className=" ">
             <View className="mt-2 flex flex-row justify-center">
-              <Text className="p-4 mx-2 bg-yellow-100">专注</Text>
-              <Text className="p-4 mx-2 bg-yellow-300">休息</Text>
+              <View className="mx-2">
+                <Button
+                  color={type === 1001 ? "blue" : "gray"}
+                  className="px-4 mx-2 border"
+                  title="专注"
+                  onPress={() => {
+                    setType(1001);
+                  }}
+                ></Button>
+              </View>
+              <View className="mx-2">
+                <Button
+                  color={type === 1002 ? "blue" : "gray"}
+                  className="px-4 mx-2 border"
+                  title="休息"
+                  onPress={() => {
+                    setType(1002);
+                  }}
+                ></Button>
+              </View>
             </View>
           </View>
         </View>

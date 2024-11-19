@@ -1,22 +1,20 @@
 import { Text, View, TextInput, Button } from "react-native";
 import TimerItem from "../components/timer_item";
 import { useNavigation } from "expo-router";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState, useCallback } from "react";
 
 function AddTimerPage() {
   let navigation = useNavigation();
   let [title, setTitle] = useState("");
   let [type, setType] = useState(1001);
 
+  const handleSave = useCallback(() => {
+    console.log(title);
+  }, [title]);
+
   const rightView = (
     <View className="flex-row items-center pr-2">
-      <Button
-        onPress={() => {
-          console.log("保存");
-          console.log(title);
-        }}
-        title="保存"
-      ></Button>
+      <Button onPress={handleSave} title="保存"></Button>
     </View>
   );
 
@@ -25,7 +23,7 @@ function AddTimerPage() {
       title: "添加计时器",
       headerRight: () => rightView,
     });
-  }, [navigation]);
+  }, [navigation, title]);
 
   return (
     <View>

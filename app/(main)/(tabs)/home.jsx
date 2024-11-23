@@ -2,6 +2,8 @@ import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
 import TimerItem from "../../components/timer_item";
 import { useLayoutEffect } from "react";
 import { router, useNavigation } from "expo-router";
+import TimerModel from "../../models/timer";
+import TomatoModel from "../../models/tomato";
 
 export default function HomeScreen() {
   let navigation = useNavigation();
@@ -80,7 +82,12 @@ export default function HomeScreen() {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View className="mt-4">
-                <TimerItem item={item}></TimerItem>
+                <TimerItem
+                  handleTimerAction={(item) => {
+                    console.log(item);
+                  }}
+                  item={item}
+                ></TimerItem>
               </View>
             )}
           />

@@ -1,18 +1,21 @@
-import { useBearStore } from "../store/store";
+import { View, Text, Pressable } from "react-native";
+import { useBearStore } from "../../store/store";
+import TimerModel from "../models/timer";
 
 function TimerItem({ timer, handleTimerAction = (e) => e }) {
   let iconView = <Text className="text-[20px] leading-tight">🍅</Text>;
+  const currentTimer = useBearStore((state) => state.currentTimer);
+  const remainTimeLabel = useBearStore((state) => state.remainTimerLabel);
 
   let remainLabelStr = () => {
     // 剩余时间 MM:SS 格式显示
-    const currentTimer = useBearStore((state) => state.currentTimer);
-    if (timer === currentTimer) {
-      return useBearStore((state) => state.remainTimerLabel);
+    if (timer.id === (currentTimer && currentTimer.id)) {
+      return remainTimeLabel;
     }
-    return timer.totalTimeStr;
+    return "";
   };
 
-  if (timer.type === 1002) {
+  if (timer.type === TimerModel.TYPE.REST) {
     iconView = <Text className="text-[20px] leading-tight">☕</Text>;
   }
   return (
@@ -23,11 +26,11 @@ function TimerItem({ timer, handleTimerAction = (e) => e }) {
           {iconView}
           <Text className="text-[20px] ml-2  leading-tight">{timer.title}</Text>
           <Text className="text-[16px] ml-4  leading-tight">
-            {remainLabelStr()}
+            {timer.minutes}m
           </Text>
         </View>
 
-        {timer.type === 1001 ? (
+        {timer.type === TimerModel.TYPE.TOMATO ? (
           <View className="mt-2">
             <Text className=" text-gray-400">今日已执行</Text>
           </View>
@@ -35,15 +38,20 @@ function TimerItem({ timer, handleTimerAction = (e) => e }) {
       </View>
 
       {/* right */}
-      <Pressable
-        onPress={() => {
-          handleTimerAction(item);
-        }}
-      >
-        <View className=" w-8 h-8">
-          <Text className=" text-[24px]">▶</Text>
+      <View className="flex-row items-center">
+        <View className=" ">
+          <Text className=" text-gray-400">{remainLabelStr()}</Text>
         </View>
-      </Pressable>
+        <View className=" w-8 h-8 ml-2 ">
+          <Pressable
+            onPress={() => {
+              handleTimerAction(timer);
+            }}
+          >
+            <Text className=" leading-tight  text-[24px]">▶</Text>
+          </Pressable>
+        </View>
+      </View>
     </View>
   );
 }

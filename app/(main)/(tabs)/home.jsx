@@ -1,12 +1,33 @@
-import { View, Text, Pressable, StyleSheet, FlatList } from "react-native";
+import { View, Text, Pressable, FlatList } from "react-native";
 import TimerItem from "../../components/timer_item";
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import { router, useNavigation } from "expo-router";
 import TimerModel from "../../models/timer";
-import TomatoModel from "../../models/tomato";
+import { useBearStore } from "../../../store/store";
+
+const INIT_DATA = [
+  new TimerModel({
+    id: 1,
+    title: "工作",
+    duration: 25 * 60,
+    order: 0,
+    type: TimerModel.TYPE.TOMATO,
+  }),
+  new TimerModel({
+    id: 2,
+    title: "休息",
+    duration: 5 * 60,
+    order: 1,
+    type: TimerModel.TYPE.REST,
+  }),
+];
 
 export default function HomeScreen() {
   let navigation = useNavigation();
+  let currentTimer = useBearStore((state) => state.currentTimer);
+  let setCurrentTimer = useBearStore((state) => state.setCurrentTimer);
+  let setRemainTimerLabel = useBearStore((state) => state.setRemainTimerLabel);
+  const [remainingTime, setRemainingTime] = useState(0);
   let rightButtons = [
     {
       text: "🔍",
@@ -62,31 +83,36 @@ export default function HomeScreen() {
 
         <View>
           <FlatList
-            data={[
-              {
-                id: 1,
-                title: "专注",
-                type: 1001,
-              },
-              {
-                id: 2,
-                title: "休息",
-                type: 1002,
-              },
-              {
-                id: 3,
-                title: "长专注",
-                type: 1001,
-              },
-            ]}
+            data={[...INIT_DATA]}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View className="mt-4">
                 <TimerItem
                   handleTimerAction={(item) => {
                     console.log(item);
+                    setCurrentTimer(item);
+                    setRemainingTime(item.duration);
+                    const _timer = setInterval(() => {
+                      console.log("here");
+                      let remainMinutes = Math.floor(remainingTime / 60);
+                      let remainSeconds = remainingTime % 60;
+                      setRemainTimerLabel(
+                        `${remainMinutes
+                          .toString()
+                          .padStart(2, "0")}:${remainSeconds
+                          .toString()
+                          .padStart(2, "0")}`
+                      );
+
+                      if (remainingTime <= 0) {
+                        console.log("结束");
+                        clearInterval(_timer);
+                        return;
+                      }
+                      setRemainingTime((prev) => prev - 1);
+                    }, 1000);
                   }}
-                  item={item}
+                  timer={item}
                 ></TimerItem>
               </View>
             )}

@@ -1,6 +1,6 @@
 import { View, Text, Pressable, FlatList } from "react-native";
 import TimerItem from "../../components/timer_item";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { router, useNavigation } from "expo-router";
 import TimerModel from "../../models/timer";
 import { useBearStore } from "../../../store/store";
@@ -20,14 +20,27 @@ const INIT_DATA = [
     order: 1,
     type: TimerModel.TYPE.REST,
   }),
+  new TimerModel({
+    id: 3,
+    title: "测试",
+    duration: 5,
+    order: 1,
+    type: TimerModel.TYPE.REST,
+  }),
 ];
 
 export default function HomeScreen() {
   let navigation = useNavigation();
-  let currentTimer = useBearStore((state) => state.currentTimer);
-  let setCurrentTimer = useBearStore((state) => state.setCurrentTimer);
-  let setRemainTimerLabel = useBearStore((state) => state.setRemainTimerLabel);
-  const [remainingTime, setRemainingTime] = useState(0);
+  let globalCurrentTimer = useBearStore((state) => state.globalCurrentTimer);
+  let setGlobalCurrentTimer = useBearStore(
+    (state) => state.setGlobalCurrentTimer
+  );
+  let startTimer = useBearStore((state) => state.startTimer);
+  let setGlobalRemainTimerLabel = useBearStore(
+    (state) => state.setGlobalRemainTimerLabel
+  );
+  let [pageTimer, setPageTimer] = useState(null);
+  // const [remainingTime, setRemainingTime] = useState(0);
   let rightButtons = [
     {
       text: "🔍",
@@ -90,27 +103,9 @@ export default function HomeScreen() {
                 <TimerItem
                   handleTimerAction={(item) => {
                     console.log(item);
-                    setCurrentTimer(item);
-                    setRemainingTime(item.duration);
-                    const _timer = setInterval(() => {
-                      console.log("here");
-                      let remainMinutes = Math.floor(remainingTime / 60);
-                      let remainSeconds = remainingTime % 60;
-                      setRemainTimerLabel(
-                        `${remainMinutes
-                          .toString()
-                          .padStart(2, "0")}:${remainSeconds
-                          .toString()
-                          .padStart(2, "0")}`
-                      );
-
-                      if (remainingTime <= 0) {
-                        console.log("结束");
-                        clearInterval(_timer);
-                        return;
-                      }
-                      setRemainingTime((prev) => prev - 1);
-                    }, 1000);
+                    // 通过切换当前的 timer，开始计时器
+                    // setPageTimer(item);
+                    startTimer(item);
                   }}
                   timer={item}
                 ></TimerItem>

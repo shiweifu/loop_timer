@@ -4,15 +4,20 @@ import TimerModel from "../models/timer";
 
 function TimerItem({ timer, handleTimerAction = (e) => e }) {
   let iconView = <Text className="text-[20px] leading-tight">🍅</Text>;
-  const currentTimer = useBearStore((state) => state.currentTimer);
-  const remainTimeLabel = useBearStore((state) => state.remainTimerLabel);
+  const globalCurrentTimer = useBearStore((state) => state.globalCurrentTimer);
+  const globalRemainTimerLabel = useBearStore(
+    (state) => state.globalRemainTimerLabel
+  );
 
   let remainLabelStr = () => {
     // 剩余时间 MM:SS 格式显示
-    if (timer.id === (currentTimer && currentTimer.id)) {
-      return remainTimeLabel;
+    if (globalCurrentTimer === null) {
+      return "";
     }
-    return "";
+    if (timer.id !== globalCurrentTimer.id) {
+      return "";
+    }
+    return globalRemainTimerLabel;
   };
 
   if (timer.type === TimerModel.TYPE.REST) {

@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import "react-native-reanimated";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
+import Toast from "react-native-toast-message";
 
 import "../global.css";
 
@@ -40,6 +41,7 @@ export default function RootLayout() {
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
+      <Toast></Toast>
     </ThemeProvider>
   );
 }

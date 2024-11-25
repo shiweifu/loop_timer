@@ -2,45 +2,13 @@ import { View, Text, Pressable, FlatList } from "react-native";
 import TimerItem from "../../components/timer_item";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { router, useNavigation } from "expo-router";
-import TimerModel from "../../models/timer";
 import { useBearStore } from "../../../store/store";
-
-const INIT_DATA = [
-  new TimerModel({
-    id: 1,
-    title: "工作",
-    duration: 25 * 60,
-    order: 0,
-    type: TimerModel.TYPE.TOMATO,
-  }),
-  new TimerModel({
-    id: 2,
-    title: "休息",
-    duration: 5 * 60,
-    order: 1,
-    type: TimerModel.TYPE.REST,
-  }),
-  new TimerModel({
-    id: 3,
-    title: "测试",
-    duration: 5,
-    order: 1,
-    type: TimerModel.TYPE.REST,
-  }),
-];
+import { useTimerStore } from "../../../store/timer";
 
 export default function HomeScreen() {
   let navigation = useNavigation();
-  let globalCurrentTimer = useBearStore((state) => state.globalCurrentTimer);
-  let setGlobalCurrentTimer = useBearStore(
-    (state) => state.setGlobalCurrentTimer
-  );
   let startTimer = useBearStore((state) => state.startTimer);
-  let setGlobalRemainTimerLabel = useBearStore(
-    (state) => state.setGlobalRemainTimerLabel
-  );
-  let [pageTimer, setPageTimer] = useState(null);
-  // const [remainingTime, setRemainingTime] = useState(0);
+  let timerList = useTimerStore((state) => state.timerList);
   let rightButtons = [
     {
       text: "🔍",
@@ -74,7 +42,7 @@ export default function HomeScreen() {
 
   return (
     <View>
-      <View>
+      <View className="">
         <View
           className="h-[200px] bg-yellow-100 flex items-center justify-center 
          text-[24px]"
@@ -94,9 +62,9 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <View>
+        <View className="h-[400px] bg-gray-300">
           <FlatList
-            data={[...INIT_DATA]}
+            data={[...timerList]}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View className="mt-4">

@@ -1,6 +1,6 @@
 import { View, Text, Pressable } from "react-native";
 import { useBearStore } from "../../store/store";
-import TimerModel from "../models/timer";
+import TimerModel from "../../models/timer";
 
 function TimerItem({ timer, handleTimerAction = (e) => e }) {
   let iconView = <Text className="text-[20px] leading-tight">🍅</Text>;

@@ -3,12 +3,15 @@ import TimerItem from "../../components/timer_item";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { router, useNavigation } from "expo-router";
 import { useBearStore } from "../../../store/store";
-import { useTimerStore } from "../../../store/timer";
+import { useTimerStore, useTomatoStore } from "../../../store/timer";
 
 export default function HomeScreen() {
   let navigation = useNavigation();
   let startTimer = useBearStore((state) => state.startTimer);
+  let finishTimer = useBearStore((state) => state.finishTimer);
   let timerList = useTimerStore((state) => state.timerList);
+  let addTomato = useTomatoStore((state) => state.addTomato);
+
   let rightButtons = [
     {
       text: "🔍",
@@ -73,7 +76,13 @@ export default function HomeScreen() {
                     console.log(item);
                     // 通过切换当前的 timer，开始计时器
                     // setPageTimer(item);
-                    startTimer(item);
+
+                    // startTimer(item);
+
+                    // finishTimer();
+
+                    // 添加番茄
+                    addTomato(item);
                   }}
                   timer={item}
                 ></TimerItem>

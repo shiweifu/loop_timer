@@ -80,21 +80,21 @@ function AddTimerPage() {
             <View className="mt-2 flex flex-row justify-center">
               <View className="mx-2">
                 <Button
-                  color={type === 1001 ? "blue" : "gray"}
+                  color={type === TimerModel.TYPE.TOMATO ? "blue" : "gray"}
                   className="px-4 mx-2 border"
                   title="专注"
                   onPress={() => {
-                    setType(1001);
+                    setType(TimerModel.TYPE.TOMATO);
                   }}
                 ></Button>
               </View>
               <View className="mx-2">
                 <Button
-                  color={type === 1002 ? "blue" : "gray"}
+                  color={type === TimerModel.TYPE.REST ? "blue" : "gray"}
                   className="px-4 mx-2 border"
                   title="休息"
                   onPress={() => {
-                    setType(1002);
+                    setType(TimerModel.TYPE.REST);
                   }}
                 ></Button>
               </View>

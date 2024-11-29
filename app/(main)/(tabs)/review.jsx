@@ -1,4 +1,5 @@
-import { Text, View, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
+import ReviewItem from "../../../components/ReviewItem";
 
 function ReviewPage() {
   return (
@@ -8,20 +9,18 @@ function ReviewPage() {
           {/* 列出每天的计时情况 */}
           <FlatList
             numColumns={3}
-            data={["", "", "", ""]}
+            data={[
+              {
+                id: 1,
+                title: "20210901",
+                tomato: 300,
+                rest: 5,
+              },
+            ]}
             renderItem={({ item, idx }) => {
               return (
-                <View className={"col-span-3 p-4 bg-white mt-4 mr-4"}>
-                  <Text className=" font-bold">2021-09-01</Text>
-                  <View>
-                    <View className="mt-2">
-                      <Text>🍅 ✖ 25分钟</Text>
-                    </View>
-
-                    <View className="mt-2">
-                      <Text>⏱ ✖ 5分钟</Text>
-                    </View>
-                  </View>
+                <View className={(idx + 1) % 3 == 0 ? "" : "w-1/3"}>
+                  <ReviewItem item={item}></ReviewItem>;
                 </View>
               );
             }}

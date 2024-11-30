@@ -1,5 +1,4 @@
-const TomatoTypeBreak = 1001;
-const TomatoTypeTimer = 1002;
+import TimerModel from "./timer";
 
 class TomatoModel {
   constructor({ id, title, duration, type, timerId, createdAt }) {
@@ -12,7 +11,7 @@ class TomatoModel {
   }
 
   get tomatoType() {
-    if (this.type === TomatoTypeBreak) {
+    if (this.type === TimerModel.TYPE.REST) {
       return "休息";
     } else {
       return "专注";
@@ -20,7 +19,7 @@ class TomatoModel {
   }
 
   get tomatoTypeStr() {
-    if (this.type === TomatoTypeBreak) {
+    if (this.type === TimerModel.TYPE.REST) {
       return "休息";
     } else {
       return "专注";

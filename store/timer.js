@@ -6,14 +6,16 @@ class DayModel {
   constructor({ dateStr, tomatos }) {
     this.dateStr = dateStr;
     this.tomatos = tomatos;
-    this.tomatoDuration = "25";
-    this.restDuration = "5";
-    // this.tomatoDuration = tomatos.reduce((acc, tomato) => {
-    //   return acc + tomato.duration;
-    // }, 0);
-    // this.restDuration = tomatos.reduce((acc, tomato) => {
-    //   return acc + tomato.duration;
-    // }, 0);
+    this.tomatoDuration = 0;
+    this.restDuration = 0;
+
+    tomatos.forEach((tomato) => {
+      if (tomato.type === TimerModel.TYPE.TOMATO) {
+        this.tomatoDuration += tomato.duration;
+      } else {
+        this.restDuration += tomato.duration;
+      }
+    });
   }
 }
 
@@ -63,14 +65,14 @@ const useTomatoStore = create((set, get) => ({
     new TomatoModel({
       id: 1,
       title: "测试",
-      duration: 25,
+      duration: 30,
       type: TimerModel.TYPE.TOMATO,
       createdAt: new Date(),
     }),
     new TomatoModel({
       id: 2,
       title: "测试2",
-      duration: 25,
+      duration: 15,
       type: TimerModel.TYPE.REST,
       createdAt: new Date(),
     }),

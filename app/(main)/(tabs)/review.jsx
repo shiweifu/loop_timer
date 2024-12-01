@@ -1,5 +1,5 @@
 import { View, FlatList } from "react-native";
-import ReviewItem from "../../../components/ReviewItem";
+import ReviewItem2 from "../../../components/ReviewItem";
 import { useTomatoStore } from "../../../store/timer";
 
 function ReviewPage() {
@@ -16,7 +16,7 @@ function ReviewPage() {
             renderItem={({ item, idx }) => {
               return (
                 <View className={(idx + 1) % 3 == 0 ? "" : "w-1/3"}>
-                  <ReviewItem item={item}></ReviewItem>;
+                  <ReviewItem2 item={item}></ReviewItem2>
                 </View>
               );
             }}

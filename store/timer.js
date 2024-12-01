@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import TimerModel from "../models/timer";
 import TomatoModel from "../models/tomato";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 class DayModel {
   constructor({ dateStr, tomatos }) {
@@ -16,6 +17,14 @@ class DayModel {
         this.restDuration += tomato.duration;
       }
     });
+  }
+
+  get tomatoMinutes() {
+    return Math.floor(this.tomatoDuration / 60);
+  }
+
+  get restMinutes() {
+    return Math.floor(this.restDuration / 60);
   }
 }
 
@@ -51,7 +60,8 @@ const useTimerStore = create((set) => ({
     }),
   ],
   addTimer: (timer) => {
-    timer.id = Date.now();
+    // 递增
+    timer.id = get().timerList.length + 1;
     return set((state) => ({ timerList: [...state.timerList, timer] }));
   },
   removeTimer: (timer) =>
@@ -65,14 +75,14 @@ const useTomatoStore = create((set, get) => ({
     new TomatoModel({
       id: 1,
       title: "测试",
-      duration: 30,
+      duration: 30 * 60,
       type: TimerModel.TYPE.TOMATO,
       createdAt: new Date(),
     }),
     new TomatoModel({
       id: 2,
       title: "测试2",
-      duration: 15,
+      duration: 15 * 60,
       type: TimerModel.TYPE.REST,
       createdAt: new Date(),
     }),
@@ -82,7 +92,7 @@ const useTomatoStore = create((set, get) => ({
       title: timer.title,
       duration: timer.duration,
       type: timer.type,
-      createdAt: Date.now(),
+      createdAt: new Date(),
     });
 
     return set((state) => ({ tomatoList: [...state.tomatoList, tomato] }));

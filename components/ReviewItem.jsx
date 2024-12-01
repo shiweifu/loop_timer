@@ -6,11 +6,11 @@ function ReviewItem({ item }) {
       <Text className=" font-bold">{item.dateStr}</Text>
       <View>
         <View className="mt-2">
-          <Text>🍅 ✖ {item.tomatoDuration}分钟</Text>
+          <Text>🍅 ✖ {item.tomatoMinutes}分钟</Text>
         </View>
 
         <View className="mt-2">
-          <Text>⏱ ✖ {item.restDuration}分钟</Text>
+          <Text>⏱ ✖ {item.restMinutes}分钟</Text>
         </View>
       </View>
     </View>

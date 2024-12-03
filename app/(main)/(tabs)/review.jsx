@@ -15,7 +15,13 @@ function ReviewPage() {
             data={tomatoStroe.dayItems()}
             renderItem={({ item, idx }) => {
               return (
-                <View className={(idx + 1) % 3 == 0 ? "" : "w-1/3"}>
+                <View
+                  style={{
+                    width: "33.3333%",
+                    paddingLeft: 4,
+                    paddingRight: 4,
+                  }}
+                >
                   <ReviewItem item={item}></ReviewItem>
                 </View>
               );

@@ -2,6 +2,7 @@ import { create, get } from "zustand";
 import TimerModel from "../models/timer";
 import TomatoModel from "../models/tomato";
 import DayModel from "../models/day";
+import dayjs from "dayjs";
 
 const useTimerStore = create((set) => ({
   timerList: [
@@ -60,6 +61,23 @@ const useTomatoStore = create((set, get) => ({
       duration: 15 * 60,
       type: TimerModel.TYPE.REST,
       createdAt: new Date(),
+    }),
+
+    new TomatoModel({
+      id: 3,
+      title: "测试2",
+      duration: 15 * 60,
+      type: TimerModel.TYPE.REST,
+      // 昨日
+      createdAt: dayjs().subtract(1, "day").toDate(),
+    }),
+    new TomatoModel({
+      id: 4,
+      title: "测试2",
+      duration: 15 * 60,
+      type: TimerModel.TYPE.REST,
+      // 昨日
+      createdAt: dayjs().subtract(2, "day").toDate(),
     }),
   ],
   addTomato: (timer) => {

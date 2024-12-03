@@ -1,10 +1,10 @@
-import { create, get } from "zustand";
+import { create } from "zustand";
 import TimerModel from "../models/timer";
 import TomatoModel from "../models/tomato";
 import DayModel from "../models/day";
 import dayjs from "dayjs";
 
-const useTimerStore = create((set) => ({
+const useTimerStore = create((set, get) => ({
   timerList: [
     new TimerModel({
       id: 1,

@@ -4,6 +4,8 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { router, useNavigation } from "expo-router";
 import { useBearStore } from "../../../store/store";
 import { useTimerStore, useTomatoStore } from "../../../store/timer";
+import Constants from "expo-constants";
+import { useWindowDimensions } from "react-native";
 
 export default function HomeScreen() {
   let navigation = useNavigation();
@@ -11,12 +13,11 @@ export default function HomeScreen() {
   let finishTimer = useBearStore((state) => state.finishTimer);
   let timerList = useTimerStore((state) => state.timerList);
   let addTomato = useTomatoStore((state) => state.addTomato);
+  let [screenHeight, setScreenHeight] = useState(0);
+  let dimensions = useWindowDimensions();
+  console.log(dimensions);
 
   let rightButtons = [
-    {
-      text: "🔍",
-      onPress: () => {},
-    },
     {
       text: "添加",
       onPress: () => {
@@ -43,6 +44,12 @@ export default function HomeScreen() {
     });
   }, [navigation]);
 
+  const { statusBarHeight } = Constants;
+  const tabBarHeight = 50;
+  const topViewHeight = 200;
+  const viewHeight =
+    dimensions.height - statusBarHeight - tabBarHeight - topViewHeight;
+
   return (
     <View>
       <View className="">
@@ -65,7 +72,15 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <View className="h-[400px] bg-gray-300">
+        <View
+          style={{
+            // 组件高度为屏幕高度减去 底部 tabBar 高度
+            height: viewHeight,
+            // overflowY: "scroll",
+            // height: 200,
+          }}
+          className="bg-gray-300"
+        >
           <FlatList
             data={[...timerList]}
             keyExtractor={(item) => item.id}

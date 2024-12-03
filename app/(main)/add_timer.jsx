@@ -1,6 +1,6 @@
 import { Text, View, TextInput, Button } from "react-native";
 import { useNavigation } from "expo-router";
-import { useLayoutEffect, useState, useCallback } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useTimerStore } from "../../store/timer";
 import Toast from "react-native-toast-message";
 import TimerModel from "../../models/timer";

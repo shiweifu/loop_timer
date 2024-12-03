@@ -1,3 +1,5 @@
+import TimerModel from "./timer";
+
 class DayModel {
   constructor({ dateStr, tomatos }) {
     this.dateStr = dateStr;
@@ -22,3 +24,5 @@ class DayModel {
     return Math.floor(this.restDuration / 60);
   }
 }
+
+export default DayModel;

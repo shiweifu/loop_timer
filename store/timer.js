@@ -81,6 +81,7 @@ const useTomatoStore = create((set, get) => ({
     dateStrs.forEach((dateStr) => {
       let tomatos = get().tomatosByDate(dateStr);
       items.push(new DayModel({ dateStr, tomatos }));
+      //   items.push(new DayModel({ dateStr: "asdf", tomatos }));
     });
     return items;
   },

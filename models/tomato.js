@@ -38,7 +38,9 @@ class TomatoModel {
     if (!this.createdAt) {
       return "";
     }
-    return `${this.createdAt.getFullYear()}-${this.createdAt.getMonth()}-${this.createdAt.getDate()}`;
+    return `${this.createdAt.getFullYear()}年${
+      this.createdAt.getMonth() + 1
+    }月${this.createdAt.getDate()}日`;
   }
 }
 

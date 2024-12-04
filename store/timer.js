@@ -60,7 +60,7 @@ const useTomatoStore = create((set, get) => ({
       title: "测试2",
       duration: 15 * 60,
       type: TimerModel.TYPE.REST,
-      createdAt: new Date(),
+      createdAt: dayjs().toDate(),
     }),
 
     new TomatoModel({
@@ -85,7 +85,7 @@ const useTomatoStore = create((set, get) => ({
       title: timer.title,
       duration: timer.duration,
       type: timer.type,
-      createdAt: new Date(),
+      createdAt: dayjs().toDate(),
     });
 
     return set((state) => ({ tomatoList: [...state.tomatoList, tomato] }));
@@ -107,7 +107,8 @@ const useTomatoStore = create((set, get) => ({
   dateItems: () => {
     let items = {};
     get().tomatoList.forEach((tomato) => {
-      let dateStr = tomato.createdAtStr;
+      let date = tomato.createdAt;
+      let dateStr = dayjs(date).format("YYYY-MM-DD");
       if (!items[dateStr]) {
         items[dateStr] = [];
       }
@@ -120,13 +121,41 @@ const useTomatoStore = create((set, get) => ({
   },
   // 返回某一天的全部 tomatos
   tomatosByDate: (dateStr) => {
-    return get().dateItems()[dateStr];
+    const groupItems = get().dateItems();
+    if (!groupItems[dateStr]) {
+      return [];
+    }
+    return groupItems[dateStr];
   },
 
   removeTomato: (tomato) =>
     set((state) => ({
       tomatoList: state.tomatoList.filter((t) => t.id !== tomato.id),
     })),
+
+  todayTomatos: () => {
+    let todayStr = dayjs().format("YYYY-MM-DD");
+    let result = get().tomatosByDate(todayStr);
+    console.log("------", result);
+    return result;
+  },
+
+  todayTomatosCount: () => {
+    return get().todayTomatos().length;
+  },
+
+  todayTomatosDuration: () => {
+    let tomatos = get().todayTomatos();
+    let duration = 0;
+    tomatos.forEach((tomato) => {
+      if (tomato.type === TimerModel.TYPE.REST) {
+        return;
+      }
+      duration += tomato.duration;
+    });
+    let minutes = Math.floor(duration / 60);
+    return minutes;
+  },
 }));
 
 export { useTimerStore, useTomatoStore };

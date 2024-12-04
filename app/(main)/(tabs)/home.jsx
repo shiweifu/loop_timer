@@ -1,16 +1,17 @@
 import { View, Text, Pressable, FlatList } from "react-native";
 import TimerItem from "../../components/timer_item";
-import { useEffect, useLayoutEffect, useState } from "react";
+import StaticsView from "../../components/statics_view";
+import { useLayoutEffect, useState } from "react";
 import { router, useNavigation } from "expo-router";
-import { useBearStore } from "../../../store/store";
+import { useGlobalStore } from "../../../store/store";
 import { useTimerStore, useTomatoStore } from "../../../store/timer";
 import Constants from "expo-constants";
 import { useWindowDimensions } from "react-native";
 
 export default function HomeScreen() {
   let navigation = useNavigation();
-  let startTimer = useBearStore((state) => state.startTimer);
-  let finishTimer = useBearStore((state) => state.finishTimer);
+  let startTimer = useGlobalStore((state) => state.startTimer);
+  let finishTimer = useGlobalStore((state) => state.finishTimer);
   let timerList = useTimerStore((state) => state.timerList);
   let addTomato = useTomatoStore((state) => state.addTomato);
   let [screenHeight, setScreenHeight] = useState(0);
@@ -53,24 +54,7 @@ export default function HomeScreen() {
   return (
     <View>
       <View className="">
-        <View
-          className="h-[200px] bg-yellow-100 flex items-center justify-center 
-         text-[24px]"
-        >
-          <View className="flex-row items-center">
-            <Text className="text-[24px] leading-tight font-semibold">⏱</Text>
-            <Text className="text-[24px] leading-tight font-semibold">
-              {" "}
-              ️0m
-            </Text>
-          </View>
-          <View className="flex-row items-center justify-center text-lg mt-2 ">
-            <Text className="text-[24px] leading-tight">🍅 ✖</Text>
-            <Text className="text-[24px] leading-tight font-semibold ml-1">
-              0
-            </Text>
-          </View>
-        </View>
+        <StaticsView></StaticsView>
 
         <View
           style={{
@@ -90,8 +74,6 @@ export default function HomeScreen() {
                   handleTimerAction={(item) => {
                     console.log(item);
                     // 通过切换当前的 timer，开始计时器
-                    // setPageTimer(item);
-
                     // startTimer(item);
 
                     // finishTimer();

@@ -1,11 +1,13 @@
 import { View, Text, Pressable } from "react-native";
-import { useBearStore } from "../../store/store";
+import { useGlobalStore } from "../../store/store";
 import TimerModel from "../../models/timer";
 
 function TimerItem({ timer, handleTimerAction = (e) => e }) {
   let iconView = <Text className="text-[20px] leading-tight">🍅</Text>;
-  const globalCurrentTimer = useBearStore((state) => state.globalCurrentTimer);
-  const globalRemainTimerLabel = useBearStore(
+  const globalCurrentTimer = useGlobalStore(
+    (state) => state.globalCurrentTimer
+  );
+  const globalRemainTimerLabel = useGlobalStore(
     (state) => state.globalRemainTimerLabel
   );
 

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const useBearStore = create((set, get) => ({
+const useGlobalStore = create((set, get) => ({
   globalCurrentTimer: null,
   setGlobalCurrentTimer: (timer) => set({ globalCurrentTimer: timer }),
   globalRemainTimerLabel: "",
@@ -30,10 +30,9 @@ const useBearStore = create((set, get) => ({
       remainingTime -= 1;
     }, 1000);
   },
-  finishTimer: (timer) => {},
   globalRunning: () => {
     return get().globalCurrentTimer !== null;
   },
 }));
 
-export { useBearStore };
+export { useGlobalStore };

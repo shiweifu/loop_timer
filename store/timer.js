@@ -3,32 +3,33 @@ import TimerModel from "../models/timer";
 import TomatoModel from "../models/tomato";
 import DayModel from "../models/day";
 import dayjs from "dayjs";
+import { getUUID } from "../constants/utils";
 
 const useTimerStore = create((set, get) => ({
   timerList: [
     new TimerModel({
-      id: 1,
+      id: getUUID(),
       title: "工作",
       duration: 25 * 60,
       order: 0,
       type: TimerModel.TYPE.TOMATO,
     }),
     new TimerModel({
-      id: 2,
+      id: getUUID(),
       title: "休息",
       duration: 5 * 60,
       order: 1,
       type: TimerModel.TYPE.REST,
     }),
     new TimerModel({
-      id: 3,
+      id: getUUID(),
       title: "测试",
       duration: 5,
       order: 1,
       type: TimerModel.TYPE.REST,
     }),
     new TimerModel({
-      id: 4,
+      id: getUUID(),
       title: "测试2",
       duration: 5,
       order: 1,
@@ -49,14 +50,14 @@ const useTimerStore = create((set, get) => ({
 const useTomatoStore = create((set, get) => ({
   tomatoList: [
     new TomatoModel({
-      id: 1,
+      id: getUUID(),
       title: "测试",
       duration: 30 * 60,
       type: TimerModel.TYPE.TOMATO,
       createdAt: new Date(),
     }),
     new TomatoModel({
-      id: 2,
+      id: getUUID(),
       title: "测试2",
       duration: 15 * 60,
       type: TimerModel.TYPE.REST,
@@ -64,7 +65,7 @@ const useTomatoStore = create((set, get) => ({
     }),
 
     new TomatoModel({
-      id: 3,
+      id: getUUID(),
       title: "测试2",
       duration: 15 * 60,
       type: TimerModel.TYPE.REST,
@@ -72,7 +73,7 @@ const useTomatoStore = create((set, get) => ({
       createdAt: dayjs().subtract(1, "day").toDate(),
     }),
     new TomatoModel({
-      id: 4,
+      id: getUUID(),
       title: "测试2",
       duration: 15 * 60,
       type: TimerModel.TYPE.REST,
@@ -84,6 +85,7 @@ const useTomatoStore = create((set, get) => ({
     let tomato = new TomatoModel({
       title: timer.title,
       duration: timer.duration,
+      timerId: timer.id,
       type: timer.type,
       createdAt: dayjs().toDate(),
     });
@@ -136,7 +138,6 @@ const useTomatoStore = create((set, get) => ({
   todayTomatos: () => {
     let todayStr = dayjs().format("YYYY-MM-DD");
     let result = get().tomatosByDate(todayStr);
-    console.log("------", result);
     return result;
   },
 

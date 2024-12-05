@@ -1,6 +1,8 @@
 import { View, Text, Pressable } from "react-native";
 import { useGlobalStore } from "../../store/store";
 import TimerModel from "../../models/timer";
+import { useTomatoStore } from "../../store/timer";
+import { useEffect, useState } from "react";
 
 function TimerItem({ timer, handleTimerAction = (e) => e }) {
   let iconView = <Text className="text-[20px] leading-tight">🍅</Text>;
@@ -10,6 +12,21 @@ function TimerItem({ timer, handleTimerAction = (e) => e }) {
   const globalRemainTimerLabel = useGlobalStore(
     (state) => state.globalRemainTimerLabel
   );
+
+  let tomatoStroe = useTomatoStore((state) => state);
+  let [extStr, setExtStr] = useState("今日未执行");
+
+  useEffect(() => {
+    let tomatos = tomatoStroe.todayTomatos();
+    let found = tomatos.some((tomato) => {
+      let found = tomato.timerId === timer.id;
+      return found;
+    });
+
+    if (found) {
+      setExtStr("今日已执行");
+    }
+  }, [tomatoStroe.tomatoList]);
 
   let remainLabelStr = () => {
     // 剩余时间 MM:SS 格式显示
@@ -39,7 +56,7 @@ function TimerItem({ timer, handleTimerAction = (e) => e }) {
 
         {timer.type === TimerModel.TYPE.TOMATO ? (
           <View className="mt-2">
-            <Text className=" text-gray-400">今日已执行</Text>
+            <Text className=" text-gray-400">{extStr}</Text>
           </View>
         ) : null}
       </View>

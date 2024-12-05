@@ -16,7 +16,6 @@ export default function HomeScreen() {
   let addTomato = useTomatoStore((state) => state.addTomato);
   let [screenHeight, setScreenHeight] = useState(0);
   let dimensions = useWindowDimensions();
-  console.log(dimensions);
 
   let rightButtons = [
     {
@@ -54,8 +53,7 @@ export default function HomeScreen() {
   return (
     <View>
       <View className="">
-        <StaticsView></StaticsView>
-
+        <StaticsView />
         <View
           style={{
             // 组件高度为屏幕高度减去 底部 tabBar 高度

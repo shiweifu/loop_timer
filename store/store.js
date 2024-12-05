@@ -1,16 +1,20 @@
 import { create } from "zustand";
 
 const useGlobalStore = create((set, get) => ({
-  globalCurrentTimer: null,
-  setGlobalCurrentTimer: (timer) => set({ globalCurrentTimer: timer }),
-  globalRemainTimerLabel: "",
-  setGlobalRemainTimerLabel: (label) => set({ globalRemainTimerLabel: label }),
+  currentTimer: null,
+  lastTimer: null,
+  setCurrentTimer: (timer) => set({ currentTimer: timer }),
+  remainTimerLabel: "",
+  setRemainTimerLabel: (label) => set({ remainTimerLabel: label }),
   finishTimer: () => {
-    set({ globalCurrentTimer: null });
-    set({ remainTimerLabel: "" });
+    set({
+      lastTimer: get().currentTimer,
+      currentTimer: null,
+      remainTimerLabel: "",
+    });
   },
   startTimer: (timer) => {
-    set({ globalCurrentTimer: timer });
+    set({ currentTimer: timer, lastTimer: null });
     let remainingTime = timer.duration;
     const _timerId = setInterval(() => {
       console.log("timer running: ", remainingTime);
@@ -20,7 +24,7 @@ const useGlobalStore = create((set, get) => ({
         .toString()
         .padStart(2, "0")}:${remainSeconds.toString().padStart(2, "0")}`;
 
-      get().setGlobalRemainTimerLabel(remainLabel);
+      get().setRemainTimerLabel(remainLabel);
 
       if (remainingTime <= 0) {
         clearInterval(_timerId);
@@ -30,8 +34,8 @@ const useGlobalStore = create((set, get) => ({
       remainingTime -= 1;
     }, 1000);
   },
-  globalRunning: () => {
-    return get().globalCurrentTimer !== null;
+  running: () => {
+    return get().currentTimer !== null;
   },
 }));
 

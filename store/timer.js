@@ -10,7 +10,8 @@ const useTimerStore = create((set, get) => ({
     new TimerModel({
       id: getUUID(),
       title: "工作",
-      duration: 25 * 60,
+      //   duration: 25 * 60,
+      duration: 5,
       order: 0,
       type: TimerModel.TYPE.TOMATO,
     }),

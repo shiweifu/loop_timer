@@ -1,8 +1,8 @@
 import { Text, View, TextInput, Button } from "react-native";
 import { useNavigation } from "expo-router";
 import { useLayoutEffect, useState } from "react";
-import { useTimerStore } from "../../store/timer";
 import Toast from "react-native-toast-message";
+import { useTimerStore } from "../../store/timer";
 import TimerModel from "../../models/timer";
 
 function AddTimerPage() {
@@ -24,7 +24,6 @@ function AddTimerPage() {
       duration: parseInt(duration),
       order: 1,
     });
-    console.log(timer);
 
     addTimer(timer);
     // 返回上一页

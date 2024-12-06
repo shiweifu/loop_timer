@@ -13,6 +13,13 @@ const useGlobalStore = create((set, get) => ({
       remainTimerLabel: "",
     });
   },
+  stopTimer: () => {
+    set({
+      lastTimer: null,
+      currentTimer: null,
+      remainTimerLabel: "",
+    });
+  },
   startTimer: (timer) => {
     set({ currentTimer: timer, lastTimer: null });
     let remainingTime = timer.duration;

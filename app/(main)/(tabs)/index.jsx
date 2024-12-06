@@ -14,10 +14,11 @@ import TimerModel from "../../../models/timer";
 export default function HomeScreen() {
   let navigation = useNavigation();
   let startTimer = useGlobalStore((state) => state.startTimer);
+  let lastTimer = useGlobalStore((state) => state.lastTimer);
+  let stopTimer = useGlobalStore((state) => state.stopTimer);
+  let running = useGlobalStore((state) => state.running);
   let timerList = useTimerStore((state) => state.timerList);
   let addTomato = useTomatoStore((state) => state.addTomato);
-  let lastTimer = useGlobalStore((state) => state.lastTimer);
-  let running = useGlobalStore((state) => state.running);
   let dimensions = useWindowDimensions();
 
   let rightButtons = [
@@ -93,8 +94,12 @@ export default function HomeScreen() {
               <View className="mt-4">
                 <TimerItem
                   handleTimerAction={(item) => {
-                    // 通过切换当前的 timer，开始计时器
-                    startTimer(item);
+                    if (item === null) {
+                      stopTimer();
+                    } else {
+                      // 通过切换当前的 timer，开始计时器
+                      startTimer(item);
+                    }
                   }}
                   timer={item}
                 ></TimerItem>

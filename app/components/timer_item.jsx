@@ -58,7 +58,7 @@ function TimerItem({ timer, handleTimerAction = (e) => e }) {
     actionView = (
       <Pressable
         onPress={() => {
-          handleTimerAction(timer);
+          handleTimerAction(null);
         }}
       >
         <Text className=" leading-tight  text-[24px]">⏸</Text>

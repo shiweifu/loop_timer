@@ -1,6 +1,20 @@
 import { create } from "zustand";
 
 const useGlobalStore = create((set, get) => ({
+  _runAllIndex: -1,
+  _timerList: [],
+  runNextTimer: () => {
+    let index = get()._runAllIndex;
+    if (index < get()._timerList.length) {
+      get().startTimer(get()._timerList[index]);
+      set({ _runAllIndex: index + 1 });
+    }
+  },
+  startRunAllTimers: (timerList) => {
+    set({ _runAllIndex: 0, _timerList: timerList });
+    get().runNextTimer();
+  },
+
   currentTimer: null,
   lastTimer: null,
   _timerId: null,
@@ -10,11 +24,18 @@ const useGlobalStore = create((set, get) => ({
   setRemainTimerLabel: (label) => set({ remainTimerLabel: label }),
   finishTimer: () => {
     clearInterval(get()._timerId);
+    let _currentTimer = get().currentTimer;
+    console.log("currentTimer: ", _currentTimer);
+    console.log("lastTimer: ", get().lastTimer);
     set({
-      lastTimer: get().currentTimer,
+      lastTimer: _currentTimer,
       currentTimer: null,
       remainTimerLabel: "",
     });
+
+    if (get().runningAll()) {
+      get().runNextTimer();
+    }
   },
   stopTimer: () => {
     clearInterval(get()._timerId);
@@ -22,15 +43,24 @@ const useGlobalStore = create((set, get) => ({
       lastTimer: null,
       currentTimer: null,
       remainTimerLabel: "",
+      _runAllIndex: -1,
+      _timerList: [],
     });
   },
   startTimer: (timer) => {
+    console.log("start timer: ", timer);
+    // 不允许重复启动
     if (get().currentTimer !== null) {
       console.log("timer is running");
       return;
     }
 
-    set({ currentTimer: timer, lastTimer: null });
+    if (get().runningAll()) {
+      console.log("timer is running all");
+      set({ currentTimer: timer });
+    } else {
+      set({ currentTimer: timer, lastTimer: null });
+    }
     let remainingTime = timer.duration;
     const _timerId = setInterval(() => {
       console.log("timer running: ", remainingTime);
@@ -53,6 +83,10 @@ const useGlobalStore = create((set, get) => ({
   },
   running: () => {
     return get().currentTimer !== null;
+  },
+
+  runningAll: () => {
+    return get()._runAllIndex > 0;
   },
 }));
 

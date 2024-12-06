@@ -14,7 +14,8 @@ import TimerModel from "../../../models/timer";
 export default function HomeScreen() {
   let navigation = useNavigation();
   let globalStore = useGlobalStore();
-  let { lastTimer, startTimer, stopTimer } = globalStore;
+  let { lastTimer, startTimer, stopTimer, startRunAllTimers, runNextTimer } =
+    globalStore;
   let timerList = useTimerStore((state) => state.timerList);
   let addTomato = useTomatoStore((state) => state.addTomato);
   let dimensions = useWindowDimensions();
@@ -22,7 +23,10 @@ export default function HomeScreen() {
   let rightButtons = [
     {
       text: "开始",
-      onPress: () => {},
+      onPress: () => {
+        // 开始当前的计时器
+        startRunAllTimers(timerList);
+      },
     },
     {
       text: "添加",
@@ -34,8 +38,6 @@ export default function HomeScreen() {
   ];
 
   useEffect(() => {
-    console.log("-----lasttimer changed-----");
-    console.log(lastTimer);
     if (lastTimer !== null) {
       // 只有 tomato 类型被统计
       if (lastTimer.type === TimerModel.TYPE.TOMATO) {

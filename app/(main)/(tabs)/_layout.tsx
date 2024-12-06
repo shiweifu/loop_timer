@@ -4,6 +4,7 @@ import { Platform } from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { Feather } from "@expo/vector-icons";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
@@ -14,7 +15,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: "black",
+        tabBarInactiveTintColor: "gray",
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
@@ -33,7 +35,7 @@ export default function TabLayout() {
           title: "首页",
           headerShown: true,
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="paperplane.fill" color={color} />
+            <Feather name="home" size={20} color={color}></Feather>
           ),
         }}
       />
@@ -43,7 +45,7 @@ export default function TabLayout() {
           headerShown: true,
           title: "回顾",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+            <Feather name="list" size={20} color={color}></Feather>
           ),
         }}
       />

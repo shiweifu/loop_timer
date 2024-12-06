@@ -18,20 +18,6 @@ const useTimerStore = create((set, get) => ({
     new TimerModel({
       id: getUUID(),
       title: "休息",
-      duration: 5 * 60,
-      order: 1,
-      type: TimerModel.TYPE.REST,
-    }),
-    new TimerModel({
-      id: getUUID(),
-      title: "测试",
-      duration: 5,
-      order: 1,
-      type: TimerModel.TYPE.REST,
-    }),
-    new TimerModel({
-      id: getUUID(),
-      title: "测试2",
       duration: 5,
       order: 1,
       type: TimerModel.TYPE.REST,

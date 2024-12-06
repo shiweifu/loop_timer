@@ -13,10 +13,8 @@ import TimerModel from "../../../models/timer";
 
 export default function HomeScreen() {
   let navigation = useNavigation();
-  let startTimer = useGlobalStore((state) => state.startTimer);
-  let lastTimer = useGlobalStore((state) => state.lastTimer);
-  let stopTimer = useGlobalStore((state) => state.stopTimer);
-  let running = useGlobalStore((state) => state.running);
+  let globalStore = useGlobalStore();
+  let { lastTimer, startTimer, stopTimer } = globalStore;
   let timerList = useTimerStore((state) => state.timerList);
   let addTomato = useTomatoStore((state) => state.addTomato);
   let dimensions = useWindowDimensions();
@@ -39,16 +37,20 @@ export default function HomeScreen() {
     console.log("-----lasttimer changed-----");
     console.log(lastTimer);
     if (lastTimer !== null) {
-      // 弹窗提示刚刚完成的任务
-      Toast.show({
-        type: "info",
-        text1: "计时器已创建",
-      });
-
       // 只有 tomato 类型被统计
       if (lastTimer.type === TimerModel.TYPE.TOMATO) {
+        // 弹窗提示刚刚完成的任务
+        Toast.show({
+          type: "info",
+          text1: "完成了一个番茄计时",
+        });
         // 添加番茄
         addTomato(lastTimer);
+      } else {
+        Toast.show({
+          type: "info",
+          text1: "完成了一个休息计时",
+        });
       }
     }
   }, [lastTimer]);

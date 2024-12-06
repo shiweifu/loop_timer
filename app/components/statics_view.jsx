@@ -3,8 +3,8 @@ import { useTomatoStore } from "../../store/timer";
 
 function StaticsView() {
   let tomatoStroe = useTomatoStore((state) => state);
-  let todayTomatosCount = tomatoStroe.todayTomatosCount;
-  let todayTomatosDuration = tomatoStroe.todayTomatosDuration;
+  let todayTomatosCount = tomatoStroe.todayTomatosCount();
+  let todayTomatosDuration = tomatoStroe.todayTomatosDuration();
 
   return (
     <View
@@ -15,13 +15,13 @@ function StaticsView() {
         <Text className="text-[24px] leading-tight font-semibold">⏱</Text>
         <Text className="text-[24px] leading-tight font-semibold">
           {" "}
-          {todayTomatosDuration()}m
+          {todayTomatosDuration}m
         </Text>
       </View>
       <View className="flex-row items-center justify-center text-lg mt-2 ">
         <Text className="text-[24px] leading-tight">🍅 ✖</Text>
         <Text className="text-[24px] leading-tight font-semibold ml-1">
-          {todayTomatosCount()}
+          {todayTomatosCount}
         </Text>
       </View>
     </View>

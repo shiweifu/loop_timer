@@ -1,31 +1,46 @@
 import { Text, View, TextInput, Button } from "react-native";
-import { useNavigation } from "expo-router";
-import { useLayoutEffect, useState } from "react";
+import { useNavigation, useLocalSearchParams } from "expo-router";
+import { useLayoutEffect, useState, useEffect } from "react";
 import Toast from "react-native-toast-message";
 import { useTimerStore } from "../../store/timer";
 import TimerModel from "../../models/timer";
 
-function AddTimerPage() {
+function EditTimerPage() {
   let navigation = useNavigation();
   let [title, setTitle] = useState("");
   let [type, setType] = useState(1001);
   let [duration, setDuration] = useState("25");
-  let addTimer = useTimerStore((state) => state.addTimer);
+  let [timer, setTimer] = useState(null);
+
+  let editTimer = useTimerStore((state) => state.editTimer);
+  let getTimer = useTimerStore((state) => state.getTimer);
+  const params = useLocalSearchParams();
+
+  console.log(params);
+  useEffect(() => {
+    if (params !== null && params.id) {
+      let timer = getTimer(params.id);
+      setTimer(timer);
+      setTitle(timer.title);
+      setType(timer.type);
+      setDuration(`${timer.duration / 60}`);
+    }
+  }, []);
 
   const handleSave = () => {
     Toast.show({
       type: "info",
-      text1: "计时器已创建",
+      text1: "计时器已修改",
     });
 
-    const timer = new TimerModel({
+    let newTimer = new TimerModel({
+      ...timer,
       title: title,
       type: type,
       duration: parseInt(duration * 60),
-      order: 1,
     });
 
-    addTimer(timer);
+    editTimer(newTimer);
     // 返回上一页
     navigation.pop();
   };
@@ -38,7 +53,7 @@ function AddTimerPage() {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: "添加计时器",
+      title: "编辑计时器",
       headerRight: () => rightView,
     });
   }, [navigation, title, type, duration]);
@@ -105,4 +120,4 @@ function AddTimerPage() {
   );
 }
 
-export default AddTimerPage;
+export default EditTimerPage;

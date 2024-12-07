@@ -25,13 +25,24 @@ const useTimerStore = create((set, get) => ({
   ],
   addTimer: (timer) => {
     // 递增
-    timer.id = get().timerList.length + 1;
+    timer.id = getUUID();
     return set((state) => ({ timerList: [...state.timerList, timer] }));
   },
   removeTimer: (timer) =>
     set((state) => ({
       timerList: state.timerList.filter((t) => t.id !== timer.id),
     })),
+
+  getTimer: (id) => {
+    return get().timerList.find((t) => t.id === id);
+  },
+
+  editTimer: (timer) => {
+    let index = get().timerList.findIndex((t) => t.id === timer.id);
+    let newTimerList = [...get().timerList];
+    newTimerList[index] = timer;
+    return set(() => ({ timerList: newTimerList }));
+  },
 }));
 
 const useTomatoStore = create((set, get) => ({

@@ -2,18 +2,19 @@ import { View, Text, Pressable, FlatList } from "react-native";
 import { useLayoutEffect, useEffect } from "react";
 import Constants from "expo-constants";
 import { useWindowDimensions } from "react-native";
-import { router, useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
 import { useGlobalStore } from "../../../store/store";
 import { useTimerStore, useTomatoStore } from "../../../store/timer";
 import TimerItem from "../../components/timer_item";
 import StaticsView from "../../components/statics_view";
-import TomatoModel from "../../../models/tomato";
 import TimerModel from "../../../models/timer";
 
 export default function HomeScreen() {
   let navigation = useNavigation();
   let globalStore = useGlobalStore();
+  let router = useRouter();
+
   let { lastTimer, startTimer, stopTimer, startRunAllTimers, runNextTimer } =
     globalStore;
   let timerList = useTimerStore((state) => state.timerList);
@@ -96,17 +97,25 @@ export default function HomeScreen() {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <View className="mt-4">
-                <TimerItem
-                  handleTimerAction={(item) => {
-                    if (item === null) {
-                      stopTimer();
-                    } else {
-                      // 通过切换当前的 timer，开始计时器
-                      startTimer(item);
-                    }
+                <Pressable
+                  onLongPress={() => {
+                    console.log(item);
+                    // 跳转到 EditTimer 页面
+                    router.push(`/edit_timer?id=${item.id}`, { timer: item });
                   }}
-                  timer={item}
-                ></TimerItem>
+                >
+                  <TimerItem
+                    handleTimerAction={(item) => {
+                      if (item === null) {
+                        stopTimer();
+                      } else {
+                        // 通过切换当前的 timer，开始计时器
+                        startTimer(item);
+                      }
+                    }}
+                    timer={item}
+                  ></TimerItem>
+                </Pressable>
               </View>
             )}
           />

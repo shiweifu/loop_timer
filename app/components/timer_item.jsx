@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import { useGlobalStore } from "../../store/store";
 import TimerModel from "../../models/timer";
-import { useTomatoStore } from "../../store/timer";
+import { useTomatoStore } from "../../store/tomato";
 import { useEffect, useState } from "react";
 
 function TimerItem({ timer, handleTimerAction = (e) => e }) {

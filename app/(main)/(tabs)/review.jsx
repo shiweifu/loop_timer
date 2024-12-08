@@ -1,6 +1,6 @@
 import { View, FlatList } from "react-native";
 import ReviewItem from "../../../components/ReviewItem";
-import { useTomatoStore } from "../../../store/timer";
+import { useTomatoStore } from "../../../store/tomato";
 
 function ReviewPage() {
   const tomatoStroe = useTomatoStore((state) => state);

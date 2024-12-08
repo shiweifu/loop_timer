@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { useTomatoStore } from "../../store/timer";
+import { useTomatoStore } from "../../store/tomato";
 
 function StaticsView() {
   let tomatoStroe = useTomatoStore((state) => state);

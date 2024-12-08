@@ -12,8 +12,12 @@ function EditTimerPage() {
   let [duration, setDuration] = useState("25");
   let [timer, setTimer] = useState(null);
 
-  let editTimer = useTimerStore((state) => state.editTimer);
-  let getTimer = useTimerStore((state) => state.getTimer);
+  let store = useTimerStore();
+
+  const { removeTimer, editTimer, getTimer } = store;
+
+  // let editTimer = useTimerStore((state) => state.editTimer);
+  // let getTimer = useTimerStore((state) => state.getTimer);
   const params = useLocalSearchParams();
 
   console.log(params);
@@ -60,60 +64,79 @@ function EditTimerPage() {
 
   return (
     <View>
-      <View className="p-4 min-h-screen bg-white">
+      <View className="h-full p-4 bg-white justify-between">
         <View>
-          <Text>标题</Text>
-          <View className="border rounded-md mt-4">
-            <TextInput
-              placeholder="请输入标题"
-              value={title}
-              onChangeText={(text) => {
-                console.log(text);
-                setTitle(text);
-              }}
-            ></TextInput>
+          <View>
+            <Text>标题</Text>
+            <View className="border rounded-md mt-4">
+              <TextInput
+                placeholder="请输入标题"
+                value={title}
+                onChangeText={(text) => {
+                  console.log(text);
+                  setTitle(text);
+                }}
+              ></TextInput>
+            </View>
           </View>
-        </View>
 
-        <View className="mt-4">
-          <Text>时长（m）</Text>
-          <View className="border rounded-md mt-4">
-            <TextInput
-              value={duration}
-              placeholder="请输入分钟数"
-              onChangeText={(text) => {
-                setDuration(text);
-              }}
-            ></TextInput>
+          <View className="mt-4">
+            <Text>时长（m）</Text>
+            <View className="border rounded-md mt-4">
+              <TextInput
+                value={duration}
+                placeholder="请输入分钟数"
+                onChangeText={(text) => {
+                  setDuration(text);
+                }}
+              ></TextInput>
+            </View>
           </View>
-        </View>
 
-        <View className="mt-4">
-          <Text>计时器类型</Text>
-          <View className=" ">
-            <View className="mt-2 flex flex-row justify-center">
-              <View className="mx-2">
-                <Button
-                  color={type === TimerModel.TYPE.TOMATO ? "blue" : "gray"}
-                  className="px-4 mx-2 border"
-                  title="专注"
-                  onPress={() => {
-                    setType(TimerModel.TYPE.TOMATO);
-                  }}
-                ></Button>
-              </View>
-              <View className="mx-2">
-                <Button
-                  color={type === TimerModel.TYPE.REST ? "blue" : "gray"}
-                  className="px-4 mx-2 border"
-                  title="休息"
-                  onPress={() => {
-                    setType(TimerModel.TYPE.REST);
-                  }}
-                ></Button>
+          <View className="mt-4">
+            <Text>计时器类型</Text>
+            <View className=" ">
+              <View className="mt-2 flex flex-row justify-center">
+                <View className="mx-2">
+                  <Button
+                    color={type === TimerModel.TYPE.TOMATO ? "blue" : "gray"}
+                    className="px-4 mx-2 border"
+                    title="专注"
+                    onPress={() => {
+                      setType(TimerModel.TYPE.TOMATO);
+                    }}
+                  ></Button>
+                </View>
+                <View className="mx-2">
+                  <Button
+                    color={type === TimerModel.TYPE.REST ? "blue" : "gray"}
+                    className="px-4 mx-2 border"
+                    title="休息"
+                    onPress={() => {
+                      setType(TimerModel.TYPE.REST);
+                    }}
+                  ></Button>
+                </View>
               </View>
             </View>
           </View>
+        </View>
+
+        <View>
+          <Button
+            onPress={() => {
+              removeTimer(timer);
+              Toast.show({
+                type: "info",
+                text1: "计时器已删除",
+              });
+              setTimeout(() => {
+                navigation.pop();
+              }, 2000);
+            }}
+            color={"red"}
+            title="删除"
+          ></Button>
         </View>
       </View>
     </View>

@@ -41,24 +41,6 @@ const asyncStorageMiddleware = (config) => (set, get, api) => {
 
 const useTimerStore = create(
   asyncStorageMiddleware((set, get) => {
-    const INIT_TIMER_LIST = [
-      new TimerModel({
-        id: getUUID(),
-        title: "工作",
-        //   duration: 25 * 60,
-        duration: 5,
-        order: 0,
-        type: TimerModel.TYPE.TOMATO,
-      }),
-      new TimerModel({
-        id: getUUID(),
-        title: "休息",
-        duration: 5,
-        order: 1,
-        type: TimerModel.TYPE.REST,
-      }),
-    ];
-
     return {
       timerList: [],
       addTimer: (timer) => {

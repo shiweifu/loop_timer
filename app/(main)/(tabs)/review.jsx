@@ -26,21 +26,17 @@ function ReviewPage() {
   );
 
   return (
-    <View>
-      <View className=" min-h-screen">
-        <View className="">
-          {/* 列出每天的计时情况 */}
-
+    <>
+      <View className=" h-full">
+        <View className="flex-grow">
           {tomatoStroe.dayItems().length === 0 ? (
-            <View style={{}}>
-              <EmptyView></EmptyView>
-            </View>
+            <EmptyView></EmptyView>
           ) : (
             <View className="p-4">{dataView}</View>
           )}
         </View>
       </View>
-    </View>
+    </>
   );
 }
 

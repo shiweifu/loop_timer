@@ -49,6 +49,17 @@ export default function TabLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="demo"
+        options={{
+          headerShown: true,
+          title: "演示",
+          tabBarIcon: ({ color }) => (
+            <Feather name="list" size={20} color={color}></Feather>
+          ),
+        }}
+      />
     </Tabs>
   );
 }

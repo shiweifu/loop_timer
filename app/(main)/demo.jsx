@@ -1,14 +1,19 @@
-import { View, Text } from "react-native";
+import { Stack } from "expo-router";
+import { Text, View } from "react-native";
 
 function DemoPage() {
   return (
-    <View className=" bg-yellow-200">
-      <Text className=" text-lg"> Demo Page 123 </Text>
+    <>
+      <Stack.Screen></Stack.Screen>
 
-      <Text className="text-center mt-3 text-2xl font-light text-orange-300">
-        Login
-      </Text>
-    </View>
+      <View className="w-full h-full ">
+        <View className="bg-red-100 w-full h-[200px]"></View>
+
+        <View className=" bg-yellow-100 justify-center items-center flex-grow">
+          <Text className="text-center">hello world</Text>
+        </View>
+      </View>
+    </>
   );
 }
 

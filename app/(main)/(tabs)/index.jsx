@@ -1,6 +1,5 @@
 import { View, Text, Pressable, FlatList } from "react-native";
 import { useLayoutEffect, useEffect } from "react";
-import Constants from "expo-constants";
 import { useWindowDimensions } from "react-native";
 import { useNavigation, useRouter } from "expo-router";
 import Toast from "react-native-toast-message";
@@ -79,17 +78,6 @@ export default function HomeScreen() {
     });
   }, [navigation]);
 
-  const { statusBarHeight } = Constants;
-  const tabBarHeight = 50;
-  const topViewHeight = 200;
-  const navBarHeight = 50;
-  const viewHeight =
-    dimensions.height -
-    statusBarHeight -
-    tabBarHeight -
-    topViewHeight -
-    navBarHeight;
-
   const dataView = (
     <FlatList
       data={timerList}
@@ -121,19 +109,15 @@ export default function HomeScreen() {
   );
 
   return (
-    <View>
-      <View className="">
-        <StaticsView />
-        <View
-          style={{
-            // 组件高度为屏幕高度减去 底部 tabBar 高度
-            height: viewHeight,
-          }}
-          className="bg-gray-300"
-        >
-          {timerList.length === 0 ? <EmptyView></EmptyView> : dataView}
+    <>
+      <View className=" bg-gray-200 w-full h-full">
+        <View className="h-[200px]">
+          <StaticsView />
+        </View>
+        <View className=" bg-red-200 flex-grow">
+          {timerList.length !== 0 ? <EmptyView></EmptyView> : dataView}
         </View>
       </View>
-    </View>
+    </>
   );
 }

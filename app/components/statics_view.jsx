@@ -8,7 +8,7 @@ function StaticsView() {
 
   return (
     <View
-      className="h-[200px] bg-yellow-100 flex items-center justify-center 
+      className="h-full bg-yellow-100 flex items-center justify-center 
          text-[24px]"
     >
       <View className="flex-row items-center">

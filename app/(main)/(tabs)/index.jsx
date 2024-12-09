@@ -10,6 +10,7 @@ import { useTomatoStore } from "../../../store/tomato";
 import TimerItem from "../../components/timer_item";
 import StaticsView from "../../components/statics_view";
 import TimerModel from "../../../models/timer";
+import EmptyView from "../../components/empty_view";
 
 export default function HomeScreen() {
   let navigation = useNavigation();
@@ -21,6 +22,8 @@ export default function HomeScreen() {
   let timerList = useTimerStore((state) => state.timerList);
   let addTomato = useTomatoStore((state) => state.addTomato);
   let dimensions = useWindowDimensions();
+
+  console.log(dimensions);
 
   let rightButtons = [
     {
@@ -79,8 +82,43 @@ export default function HomeScreen() {
   const { statusBarHeight } = Constants;
   const tabBarHeight = 50;
   const topViewHeight = 200;
+  const navBarHeight = 50;
   const viewHeight =
-    dimensions.height - statusBarHeight - tabBarHeight - topViewHeight;
+    dimensions.height -
+    statusBarHeight -
+    tabBarHeight -
+    topViewHeight -
+    navBarHeight;
+
+  const dataView = (
+    <FlatList
+      data={timerList}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <View className="mt-4">
+          <Pressable
+            onLongPress={() => {
+              console.log(item);
+              // 跳转到 EditTimer 页面
+              router.push(`/edit_timer?id=${item.id}`, { timer: item });
+            }}
+          >
+            <TimerItem
+              handleTimerAction={(item) => {
+                if (item === null) {
+                  stopTimer();
+                } else {
+                  // 通过切换当前的 timer，开始计时器
+                  startTimer(item);
+                }
+              }}
+              timer={item}
+            ></TimerItem>
+          </Pressable>
+        </View>
+      )}
+    ></FlatList>
+  );
 
   return (
     <View>
@@ -93,33 +131,7 @@ export default function HomeScreen() {
           }}
           className="bg-gray-300"
         >
-          <FlatList
-            data={[...timerList]}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <View className="mt-4">
-                <Pressable
-                  onLongPress={() => {
-                    console.log(item);
-                    // 跳转到 EditTimer 页面
-                    router.push(`/edit_timer?id=${item.id}`, { timer: item });
-                  }}
-                >
-                  <TimerItem
-                    handleTimerAction={(item) => {
-                      if (item === null) {
-                        stopTimer();
-                      } else {
-                        // 通过切换当前的 timer，开始计时器
-                        startTimer(item);
-                      }
-                    }}
-                    timer={item}
-                  ></TimerItem>
-                </Pressable>
-              </View>
-            )}
-          />
+          {timerList.length === 0 ? <EmptyView></EmptyView> : dataView}
         </View>
       </View>
     </View>

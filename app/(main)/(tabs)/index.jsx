@@ -16,8 +16,7 @@ export default function HomeScreen() {
   let globalStore = useGlobalStore();
   let router = useRouter();
 
-  let { lastTimer, startTimer, stopTimer, startRunAllTimers, runNextTimer } =
-    globalStore;
+  let { lastTimer, startTimer, stopTimer, startRunAllTimers } = globalStore;
   let timerList = useTimerStore((state) => state.timerList);
   let addTomato = useTomatoStore((state) => state.addTomato);
   let dimensions = useWindowDimensions();
@@ -97,7 +96,8 @@ export default function HomeScreen() {
                   stopTimer();
                 } else {
                   // 通过切换当前的 timer，开始计时器
-                  startTimer(item);
+                  // startTimer(item);
+                  addTomato(item);
                 }
               }}
               timer={item}
@@ -114,8 +114,8 @@ export default function HomeScreen() {
         <View className="h-[200px]">
           <StaticsView />
         </View>
-        <View className=" bg-red-200 flex-grow">
-          {timerList.length !== 0 ? <EmptyView></EmptyView> : dataView}
+        <View className="flex-grow">
+          {timerList.length !== 0 ? dataView : <EmptyView></EmptyView>}
         </View>
       </View>
     </>

@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import TimerModel from "./timer";
 
 class DayModel {
@@ -22,6 +23,10 @@ class DayModel {
 
   get restMinutes() {
     return Math.floor(this.restDuration / 60);
+  }
+
+  get dateTitle() {
+    return dayjs(this.dateStr).format("YYYY年MM月DD日");
   }
 }
 

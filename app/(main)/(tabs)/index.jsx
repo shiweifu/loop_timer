@@ -96,8 +96,7 @@ export default function HomeScreen() {
                   stopTimer();
                 } else {
                   // 通过切换当前的 timer，开始计时器
-                  // startTimer(item);
-                  addTomato(item);
+                  startTimer(item);
                 }
               }}
               timer={item}

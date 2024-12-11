@@ -68,10 +68,16 @@ const useTomatoStore = create(
           let tomatos = get().tomatosByDate(dateStr);
           items.push(new DayModel({ dateStr, tomatos }));
         });
+
+        // 按日期排序
+        items.sort((a, b) => {
+          return dayjs(b.dateStr).valueOf() - dayjs(a.dateStr).valueOf();
+        });
         return items;
       },
 
       dateItems: () => {
+        let result = [];
         let items = {};
         get().tomatoList.forEach((tomato) => {
           let date = tomato.createdAt;
@@ -81,8 +87,16 @@ const useTomatoStore = create(
           }
           items[dateStr].push(tomato);
         });
+
+        // 遍历 items，将结果插入到 result 中，格式为：
+        // [{key: '2021-09-01', value: [tomato1, tomato2]}]
+        for (let key in items) {
+          result.push({ key, value: items[key] });
+        }
+        console.log("dateItems", result);
         return items;
       },
+
       dateStrItems: () => {
         return Object.keys(get().dateItems());
       },

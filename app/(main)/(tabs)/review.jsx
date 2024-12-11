@@ -5,26 +5,6 @@ import EmptyView from "../../components/empty_view";
 
 function ReviewPage() {
   const tomatoStroe = useTomatoStore((state) => state);
-  const dataView = (
-    <FlatList
-      numColumns={3}
-      data={tomatoStroe.dayItems()}
-      renderItem={({ item, idx }) => {
-        return (
-          <View
-            style={{
-              width: "33.3333%",
-              paddingLeft: 4,
-              paddingRight: 4,
-            }}
-          >
-            <ReviewItem item={item}></ReviewItem>
-          </View>
-        );
-      }}
-    ></FlatList>
-  );
-
   const { width } = Dimensions.get("window");
   const itemWidth = width / 3 - 20;
 

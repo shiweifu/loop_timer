@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 
 function ReviewItem({ item }) {
   return (
-    <View className={"p-4 bg-white mt-4"}>
+    <View className={"p-4 bg-white"}>
       <Text className=" font-bold">{item.dateTitle}</Text>
       <View>
         <View className="mt-2">

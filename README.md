@@ -1,50 +1,13 @@
-# Welcome to your Expo app 👋
+一个包含基本功能的本地计时器。
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+使用 Expo 进行开发，界面使用 Tailwind，用于 RN 的学习。
 
-## Get started
+![](https://cdn.img2ipfs.com/ipfs/QmdW4LEL9gkL7oPfdrmTrVxFQDNVVBkZ3nq5JcXYPq32Kf?filename=image.png)
 
-1. Install dependencies
+![](https://cdn.img2ipfs.com/ipfs/QmUnZ5tFEF8YBa28KoUTtYkgNu2xXMA3tUQoQEs1AVXgPC?filename=image.png)
 
-   ```bash
-   npm install
-   ```
+### TODO
 
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [ ] 增加通知，切换到后台，仍然保持计时
+- [ ] 美化界面
+- [ ] 可选的同步
